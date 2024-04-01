@@ -1,3 +1,5 @@
+package Lab11;
+
 import java.text.DecimalFormat;
 
 class BankAccount {
@@ -15,14 +17,11 @@ class BankAccount {
     }
 
     public synchronized void withdraw(double amount) {
-        while (balance < amount) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if(balance > amount) {
+            balance -= amount;
+            System.out.println("Списание: " + decimalFormat.format(amount) + "; баланс: " + decimalFormat.format(balance));
+        } else {
+            System.out.println("Недостаточно средств для списания " + decimalFormat.format(amount));
         }
-        balance -= amount;
-        System.out.println("Списание: " + decimalFormat.format(amount) + "; баланс: " + decimalFormat.format(balance));
     }
 }
